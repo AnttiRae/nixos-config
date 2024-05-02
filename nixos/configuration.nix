@@ -125,7 +125,6 @@
   };
 
 
-  # TODO: Set your hostname
   networking.hostName = "nixos";
 
   # TODO: Configure your system-wide user settings (groups, etc), add more users as needed.
@@ -144,8 +143,6 @@
     };
   };
 	
-  environment.systemPackages = [ pkgs.git ];
-
   # This setups a SSH server. Very important if you're setting up a headless system.
   # Feel free to remove if you don't need it.
   services.openssh = {
@@ -161,4 +158,10 @@
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+  };
 }
+
