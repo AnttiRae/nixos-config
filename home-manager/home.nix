@@ -74,9 +74,13 @@
   };
   home.packages = with pkgs; [ 
     steam 
+    firefox
+    alacritty
     gnome.gnome-system-monitor
     gnomeExtensions.blur-my-shell
     gnomeExtensions.forge
+    gnomeExtensions.auto-move-windows
+    gnomeExtensions.quick-settings-tweaker
     ];
 
   # Enable home-manager
@@ -95,7 +99,27 @@
       enabled-extensions = with pkgs.gnomeExtensions; [
         blur-my-shell.extensionUuid
         forge.extensionUuid
+        auto-move-windows.extensionUuid
+        quick-settings-tweaker.extensionUuid
       ];
+    };
+    settings."org/gnome/shell/extensions/auto-move-windows" = {
+      application-list = [
+        com.mastermindzh.tidal-hifi.desktop:4
+        com.discordapp.Discord.desktop:3
+        steam.desktop:3
+        org.mozilla.Thunderbird.desktop:4
+      ];
+    };
+    settings."org/gnome/shell/wm/preferences" = {
+      action-middle-click-titlebar="toggle-maximize";
+      action-right-click-titlebar="menu";
+      focus-mode="click";
+      num-workspaces=5;
+      resize-with-right-button=true;
+    };
+    settings."org/gnome/mutter" = {
+      dynamic-workspaces=false;
     };
     settings."org/gnome/shell/extensions/forge/keybindings" = {
       con-split-horizontal=["<Super>z"];
@@ -141,7 +165,59 @@
     };
     settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
     settings."org/gnome/desktop/wm/keybindings" = {
-      close = ["<Super>x"];
+      close=["<Super>x"];
+      minimize=[];
+      move-to-monitor-down=["<Super><Shift>Down"];
+      move-to-monitor-left=["<Super><Shift>Left"];
+      move-to-monitor-right=["<Super><Shift>Right"];
+      move-to-monitor-up=["<Super><Shift>Up"];
+      move-to-workspace-1=["<Shift><Super>1"];
+      move-to-workspace-2=["<Shift><Super>2"];
+      move-to-workspace-3=["<Shift><Super>3"];
+      move-to-workspace-4=["<Shift><Super>4"];
+      switch-applications=["<Super>Tab" "<Alt>Tab"];
+      switch-applications-backward=["<Shift><Super>Tab" "<Shift><Alt>Tab"];
+      switch-group=["<Super>Above_Tab" "<Alt>Above_Tab"];
+      switch-group-backward=["<Shift><Super>Above_Tab" "<Shift><Alt>Above_Tab"];
+      switch-panels=["<Control><Alt>Tab"];
+      switch-panels-backward=["<Shift><Control><Alt>Tab"];
+      switch-to-workspace-1=["<Super>1"];
+      switch-to-workspace-2=["<Super>2"];
+      switch-to-workspace-3=["<Super>3"];
+      switch-to-workspace-4=["<Super>4"];
+      switch-to-workspace-last=["<Super>End"];
+      switch-to-workspace-left=["<Super>Page_Up" "<Super><Alt>Left" "<Control><Alt>Left"];
+      switch-to-workspace-right=["<Super>Page_Down" "<Super><Alt>Right" "<Control><Alt>Right"];
+      toggle-fullscreen=["<Shift><Control><Alt><Super>t"];
+      switch-tp-application-1=[];
+      switch-tp-application-2=[];
+      switch-tp-application-3=[];
+      switch-tp-application-4=[];
+    };
+
+    settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+        binding=["<Super>Return"];
+        command="alacritty";
+        name="start alacritty";
+    };
+
+    settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
+        binding=["<Super>p"];
+        command="firefox";
+        name="start firefox";
+    };
+
+    settings."org/gnome/settings-daemon/plugins/media-keys" = {
+      custom-keybindings = [
+        #/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0
+        #/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1
+      ];
+      mic-mute="F8";
+      next="<Super>period";
+      play="<Super>slash";
+      previous="<Super>comma";
+      home=[];
+      www=[];
     };
   };
 }

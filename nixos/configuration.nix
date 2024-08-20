@@ -112,6 +112,14 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
+  # Disable some gnome apps
+  environment.gnome.excludePackages = with pkgs.gnome; [
+    geary
+    gnome-music
+    epiphany
+    seahorse
+  ];
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
