@@ -81,6 +81,7 @@
     steam 
     firefox
     alacritty
+    alacritty-theme
     discord
     tidal-dl
     tidal-hifi
@@ -91,6 +92,8 @@
     gnomeExtensions.forge
     gnomeExtensions.auto-move-windows
     gnomeExtensions.quick-settings-tweaker
+    jetbrains-mono
+    nerdfonts
     ];
 
   # Enable home-manager
@@ -102,6 +105,33 @@
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.05";
 
+  programs.alacritty = {
+    enable = true;
+    
+    settings = {
+      import = with pkgs.alacritty-theme; [
+        
+      ];
+      window = {
+        opacity = 0.9;
+        decorations = "None";
+        padding = {
+          x = 2;
+          y = 2;
+        };
+      };
+      font.normal = {
+        family = "JetBrainsMono";
+      };
+      colors.primary = {
+        background = "#0f0f0f";
+      };
+      font = {
+        size = 11;
+      };
+    };
+  };
+  
   dconf = {
     enable = true;
     settings."org/gnome/shell" = {
