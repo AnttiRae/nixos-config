@@ -66,16 +66,26 @@
   };
   programs.vscode = {
     enable = true;
+
     extensions = with pkgs.vscode-extensions; [
       vscodevim.vim
-      dracula-theme.theme-dracula
+      jdinhlife.gruvbox
       yzhang.markdown-all-in-one
     ];
+    userSettings = {
+      "editor.minimap.enabled" = "false";
+      "workbench.colorTheme" = "Gruvbox Dark Medium";
+    };
   };
   home.packages = with pkgs; [ 
     steam 
     firefox
     alacritty
+    discord
+    tidal-dl
+    tidal-hifi
+    thunderbird
+    gnome3.gnome-tweaks
     gnome.gnome-system-monitor
     gnomeExtensions.blur-my-shell
     gnomeExtensions.forge
@@ -115,12 +125,34 @@
       action-middle-click-titlebar="toggle-maximize";
       action-right-click-titlebar="menu";
       focus-mode="click";
-      num-workspaces=5;
-      resize-with-right-button=true;
+      num-workspaces = 5;
+      resize-with-right-button = true;
+      mouse-button-modifier = "<Super>";
     };
     settings."org/gnome/mutter" = {
       dynamic-workspaces=false;
     };
+
+    settings."org/gnome/mutter/keybindings" = {
+      switch-monitor=[];
+    };
+    
+    settings."org/gnome/shell/extensions/forge" = {
+      auto-split-enabled=false;
+      focus-border-toggle=true;
+      move-pointer-focus-enabled=false;
+      preview-hint-enabled=true;
+      quick-settings-enabled=true;
+      showtab-decoration-enabled=false;
+      split-border-toggle=true;
+      stacked-tiling-mode-enabled=false;
+      tabbed-tiling-mode-enabled=true;
+      tiling-mode-enabled=true;
+      window-gap-hidden-on-single=true;
+      window-gap-size=lib.hm.gvariant.mkUint32 1;
+      workspace-skip-tile="";
+    };
+    
     settings."org/gnome/shell/extensions/forge/keybindings" = {
       con-split-horizontal=["<Super>z"];
       con-split-layout-toggle=["<Super>g"];
@@ -163,7 +195,22 @@
       window-toggle-float=["<Super>c"];
       workspace-active-tile-toggle=["<Shift><Super>w"];
     };
-    settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+    settings."org/gnome/desktop/input-sources" = {
+      mru-sources = ["(xkb, eu)"];
+      sources = [ (lib.gvariant.mkTuple [ "xkb" "eu"] )];
+      show-all-sources = true;
+    };
+    settings."org/gnome/desktop/interface" = {
+      cursor-theme = "Adwaita";
+      enable-animations = true;
+      clock-format = "24h";
+      clock-show-seconds = true;
+      clock-show-weekday = true;
+      font-hinting = "slight";
+      toolkit-accessibility = false;
+      color-scheme = "prefer-dark";
+    };
+
     settings."org/gnome/desktop/wm/keybindings" = {
       close=["<Super>x"];
       minimize=[];
@@ -196,21 +243,21 @@
     };
 
     settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-        binding=["<Super>Return"];
+        binding="<Super>Return";
         command="alacritty";
         name="start alacritty";
     };
 
     settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
-        binding=["<Super>p"];
+        binding="<Super>p";
         command="firefox";
         name="start firefox";
     };
 
     settings."org/gnome/settings-daemon/plugins/media-keys" = {
       custom-keybindings = [
-        #/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0
-        #/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
       ];
       mic-mute="F8";
       next="<Super>period";
@@ -218,6 +265,7 @@
       previous="<Super>comma";
       home=[];
       www=[];
+      screensaver=["<Super>esc"];
     };
   };
 }
