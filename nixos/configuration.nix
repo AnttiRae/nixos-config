@@ -22,7 +22,15 @@
 
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
+    inputs.home-manager.nixosModules.home-manager
   ];
+
+  home-manager = {
+    extraSpecialArgs = { inherit inputs outputs; };
+    users = {
+	antti = import ../home-manager/home.nix;
+    };
+  };
 
   nixpkgs = {
     # You can add overlays here
@@ -103,6 +111,14 @@
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
+
+  # Disable some gnome apps
+  environment.gnome.excludePackages = with pkgs.gnome; [
+    geary
+    gnome-music
+    epiphany
+    seahorse
+  ];
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
