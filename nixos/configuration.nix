@@ -117,6 +117,7 @@
     geary
     gnome-music
     epiphany
+    seahorse
   ];
 
   # Enable CUPS to print documents.
