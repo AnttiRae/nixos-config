@@ -48,6 +48,10 @@ in {
     --border="rounded" --border-label="" --preview-window="border-rounded" --prompt="> "
     --marker=">" --pointer="◆" --separator="─" --scrollbar="│"'
     TMUX_FZF_OPTIONS="-p -w 85% -h 75% -m"
+
+    bind-key "t" run-shell -b "${pkgs.tmuxPlugins.tmux-fzf}/share/tmux-plugins/tmux-fzf/scripts/session.sh switch"
+    bind-key "T" run-shell -b "${pkgs.tmuxPlugins.tmux-fzf}/share/tmux-plugins/tmux-fzf/scripts/session.sh"
+
     '';
     };
 }
