@@ -18,6 +18,7 @@
 
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
+    ./tmux/tmux.nix
   ];
 
   nixpkgs = {
@@ -60,14 +61,52 @@
 
 
   # Add stuff for your user as you see fit:
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    initExtra = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+    historySubstringSearch.enable = true;
+    oh-my-zsh = {
+      enable = true;
+      plugins = [
+        "git"
+        "history-substring-search"
+        "colored-man-pages"
+        "docker"
+        "direnv"
+        "kubectl"
+        "kubectx"
+      ];
+    };
+    
+    plugins = [
+      {
+        name = "powerlevel10k";
+        src = pkgs.zsh-powerlevel10k;
+        file = "share/zsh-powerline10k/powerlevel10k.zsh-theme";
+      }
+      {
+        name = "powerlevel10k-config";
+        src = ./p10k;
+        file = "p10k.zsh";
+      }
+
+    ];
+
+
+  };
   programs.neovim = {
     enable = true;
     defaultEditor = true;
   };
+
   programs.vscode = {
     enable = true;
 
     extensions = with pkgs.vscode-extensions; [
+      bbenoist.nix
       vscodevim.vim
       jdinhlife.gruvbox
       yzhang.markdown-all-in-one
@@ -77,6 +116,8 @@
       "workbench.colorTheme" = "Gruvbox Dark Medium";
     };
   };
+  fonts.fontconfig.enable = true;
+
   home.packages = with pkgs; [ 
     steam 
     firefox
@@ -93,7 +134,10 @@
     gnomeExtensions.auto-move-windows
     gnomeExtensions.quick-settings-tweaker
     jetbrains-mono
-    nerdfonts
+    (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    zsh-powerlevel10k
+    fd
+    fzf
     ];
 
   # Enable home-manager
@@ -121,7 +165,7 @@
         };
       };
       font.normal = {
-        family = "JetBrainsMono";
+        family = "JetBrainsMonoNerdFont";
       };
       colors.primary = {
         background = "#0f0f0f";
