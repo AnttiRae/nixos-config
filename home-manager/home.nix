@@ -135,7 +135,11 @@
     zsh-powerlevel10k
     fd
     fzf
+    ripgrep
+    go
+    python3
     ];
+
 
   # Enable home-manager
   programs.home-manager.enable = true;
@@ -303,6 +307,7 @@
       switch-to-workspace-2=["<Super>2"];
       switch-to-workspace-3=["<Super>3"];
       switch-to-workspace-4=["<Super>4"];
+      switch-to-workspace-5=["<Super>5"];
       switch-to-workspace-last=["<Super>End"];
       switch-to-workspace-left=["<Super>Page_Up" "<Super><Alt>Left" "<Control><Alt>Left"];
       switch-to-workspace-right=["<Super>Page_Down" "<Super><Alt>Right" "<Control><Alt>Right"];
