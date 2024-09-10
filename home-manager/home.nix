@@ -138,6 +138,8 @@
     ripgrep
     go
     python3
+    devenv
+    age
     ];
 
 

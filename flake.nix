@@ -16,12 +16,16 @@
     #nixvim
     nixvim.url = "github:nix-community/nixvim/nixos-24.05";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
+
+    # sops-nix
+    sops-nix.url = "github:Mic92/sops-nix";
   };
 
   outputs = {
     self,
     nixpkgs,
     home-manager,
+    sops-nix,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -58,9 +62,11 @@
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
+	system = "x86_64-linux";
         modules = [
           # > Our main nixos configuration file <
           ./nixos/configuration.nix
+	  sops-nix.nixosModules.sops
         ];
       };
     };

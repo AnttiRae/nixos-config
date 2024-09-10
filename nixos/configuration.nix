@@ -23,7 +23,16 @@
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
     inputs.home-manager.nixosModules.home-manager
+    inputs.sops-nix.nixosModules.sops
   ];
+
+  sops = {
+    defaultSopsFile = ./secrets/example.yaml;
+    defaultSopsFormat = "yaml";
+    age = {
+      keyFile = "~/.config/sops/age/keys.txt";
+    };
+  };
 
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
